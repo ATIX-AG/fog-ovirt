@@ -31,3 +31,4 @@ Gemspec/RequiredRubyVersion:
 AllCops:
   Exclude:
   - 'lib/fog/ovirt/compute.rb'
+  - 'vendor/**/*'
