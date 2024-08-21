@@ -53,10 +53,14 @@ module Fog
         end
 
         def interfaces
-          @interfaces ||= id.nil? ? [] : Fog::Ovirt::Compute::Interfaces.new(
-            :service => service,
-            :vm => self
-          )
+          @interfaces ||= if id.nil?
+                            []
+                          else
+                            Fog::Ovirt::Compute::Interfaces.new(
+                              :service => service,
+                              :vm => self
+                            )
+                          end
         end
 
         def add_interface(attrs)
@@ -75,10 +79,14 @@ module Fog
         end
 
         def volumes
-          @volumes ||= id.nil? ? [] : Fog::Ovirt::Compute::Volumes.new(
-            :service => service,
-            :vm => self
-          )
+          @volumes ||= if id.nil?
+                         []
+                       else
+                         Fog::Ovirt::Compute::Volumes.new(
+                           :service => service,
+                           :vm => self
+                         )
+                       end
         end
 
         def add_volume(attrs)
@@ -126,7 +134,7 @@ module Fog
           user_data = if options[:use_custom_script]
                         { :custom_script => options[:user_data] }
                       else
-                        Hash[YAML.safe_load(options[:user_data]).map { |a| [a.first.to_sym, a.last] }]
+                        YAML.safe_load(options[:user_data]).to_h { |a| [a.first.to_sym, a.last] }
                       end
           action_status = service.vm_start_with_cloudinit(:id => id, :user_data => user_data)
           reload
@@ -160,7 +168,7 @@ module Fog
             (stop unless stopped?)
           rescue StandardError
             nil
-          end # ignore failure, destroy the machine anyway.
+          end
           wait_for { stopped? }
           service.destroy_vm(:id => id)
         end
