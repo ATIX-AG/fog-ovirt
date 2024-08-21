@@ -17,7 +17,6 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{lib,spec}/**/*"] +
                ["LICENSE.md", "Rakefile", "README.md", "CHANGELOG.md", "CONTRIBUTORS.md"]
-  spec.test_files = Dir["tests/**/*"]
   spec.require_paths = ["lib"]
   spec.required_ruby_version = ">= 2.0.0"
 
@@ -30,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "rubocop", "~> 0.52"
+  spec.add_development_dependency "rubocop", "~> 1.65"
   spec.add_development_dependency "shindo"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end

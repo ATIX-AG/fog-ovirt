@@ -23,17 +23,25 @@ module Fog
         attribute :version
 
         def interfaces
-          attributes[:interfaces] ||= id.nil? ? [] : Fog::Ovirt::Compute::Interfaces.new(
-            :service => service,
-            :vm => self
-          )
+          attributes[:interfaces] ||= if id.nil?
+                                        []
+                                      else
+                                        Fog::Ovirt::Compute::Interfaces.new(
+                                          :service => service,
+                                          :vm => self
+                                        )
+                                      end
         end
 
         def volumes
-          attributes[:volumes] ||= id.nil? ? [] : Fog::Ovirt::Compute::Volumes.new(
-            :service => service,
-            :vm => self
-          )
+          attributes[:volumes] ||= if id.nil?
+                                     []
+                                   else
+                                     Fog::Ovirt::Compute::Volumes.new(
+                                       :service => service,
+                                       :vm => self
+                                     )
+                                   end
         end
 
         def ready?

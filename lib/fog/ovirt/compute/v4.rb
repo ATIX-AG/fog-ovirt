@@ -154,7 +154,7 @@ module Fog
           private
 
           def client
-            return @client if defined?(@client)
+            @client if defined?(@client)
           end
 
           # read mocks xml
